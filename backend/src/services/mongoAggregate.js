@@ -70,10 +70,10 @@ class mongoAggregate {
 
 export default mongoAggregate;
 
-// Run if called directly
-if (process.argv[1] && process.argv[1].endsWith('mongoAggregate.js')) {
-    (async () => {
-        await mongoAggregate.testAggregations();
-        process.exit(0);
-    })();
-}
+// // Run if called directly
+// if (process.argv[1] && process.argv[1].endsWith('mongoAggregate.js')) {
+//     (async () => {
+//         await mongoAggregate.testAggregations();
+//         process.exit(0);
+//     })();
+// }
