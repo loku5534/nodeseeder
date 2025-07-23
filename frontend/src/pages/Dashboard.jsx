@@ -143,7 +143,7 @@ export default function Dashboard() {
                         ))}
                     </ul>
                 ) : (
-                    <p>No courses available.</p>
+                    <div className="loader"></div>
                 )}
             </div>
         </div>

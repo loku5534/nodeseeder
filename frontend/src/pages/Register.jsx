@@ -5,7 +5,7 @@ import {useState} from "react";
 
 export default function Register() {
     const [title, setTitle] = useState('');
-    const [numModuleGroups, setNumModuleGroups] = useState(1);
+    const [numModuleGroups, setNumModuleGroups] = useState(4);
     const [modules, setModules] = useState([['']]);
     const [loading, setLoading] = useState(false);
 
@@ -81,21 +81,24 @@ export default function Register() {
                     />
                 </div>
                 <div className="form-row">
-                    <label htmlFor="numModuleGroups">Number of Module Groups</label>
+                    <label htmlFor="numModuleGroups">Number of Semesters</label>
                     <input
                         id="numModuleGroups"
                         type="number"
-                        min={1}
+                        pattern="[0-9]*"
+                        inputMode="numeric"
                         name="numModuleGroups"
                         value={numModuleGroups}
                         onChange={handleNumModuleGroupsChange}
                         required
+                        autoComplete="off"
+                        placeholder="Enter number"
                     />
                 </div>
                 {modules.map((group, groupIdx) => (
                     <div className="module-group-card" key={groupIdx}>
                         <div className="module-group-header">
-                            <strong>Module Group {groupIdx + 1}</strong>
+                            <strong>Semester {groupIdx + 1}</strong>
                         </div>
                         {group.map((mod, modIdx) => (
                             <div className="form-row" key={modIdx}>
