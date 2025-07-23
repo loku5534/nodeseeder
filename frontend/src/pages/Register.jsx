@@ -5,19 +5,43 @@ import {useState} from "react";
 
 export default function Register() {
     const [title, setTitle] = useState('');
-    const [numModuleGroups, setNumModuleGroups] = useState(4);
+    const [numModuleGroups, setNumModuleGroups] = useState('');
     const [modules, setModules] = useState([['']]);
     const [loading, setLoading] = useState(false);
 
+    const handleNumModuleGroupsKeyDown = (e) => {
+        // Allow only digits 0-9 and '10'
+        if (
+            !(
+                (e.key >= '0' && e.key <= '9') ||
+                (e.key === 'Backspace') ||
+                (e.key === 'Delete') ||
+                (e.key === 'Tab') ||
+                (e.key === 'ArrowLeft') ||
+                (e.key === 'ArrowRight')
+            )
+        ) {
+            e.preventDefault();
+        }
+    };
+
     const handleNumModuleGroupsChange = (e) => {
-        const n = parseInt(e.target.value, 10) || 1;
-        setNumModuleGroups(n);
+        let val = e.target.value.replace(/\D/g, ''); // Remove non-digits
+        if (val.length > 2) val = val.slice(0, 2);
+        if (val === '') {
+            setNumModuleGroups('');
+            return;
+        }
+        let num = parseInt(val, 10);
+        if (isNaN(num) || num < 0) num = 1;
+        if (num > 10) num = 10;
+        setNumModuleGroups(num);
         setModules(prev => {
             const newModules = [...prev];
-            if (n > newModules.length) {
-                for (let i = newModules.length; i < n; i++) newModules.push(['']);
+            if (num > newModules.length) {
+                for (let i = newModules.length; i < num; i++) newModules.push(['']);
             } else {
-                newModules.length = n;
+                newModules.length = num;
             }
             return newModules;
         });
@@ -84,15 +108,16 @@ export default function Register() {
                     <label htmlFor="numModuleGroups">Number of Semesters</label>
                     <input
                         id="numModuleGroups"
-                        type="number"
-                        pattern="[0-9]*"
+                        type="text"
                         inputMode="numeric"
                         name="numModuleGroups"
                         value={numModuleGroups}
                         onChange={handleNumModuleGroupsChange}
+                        onKeyDown={handleNumModuleGroupsKeyDown}
                         required
                         autoComplete="off"
-                        placeholder="Enter number"
+                        placeholder="Enter number (0-10)"
+                        maxLength={2}
                     />
                 </div>
                 {modules.map((group, groupIdx) => (
