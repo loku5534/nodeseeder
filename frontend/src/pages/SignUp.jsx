@@ -114,7 +114,7 @@ export default function SignUp() {
                             <option value="3">BS Data Science</option>
                         </select>
                     </div>
-                    <button type="submit">Sign Up</button>
+                    <button type="submit" className={"signup-button"}>Sign Up</button>
                 </form>
                 <p className="login-link">
                     Already have an account? <Link to="/login">Login</Link>

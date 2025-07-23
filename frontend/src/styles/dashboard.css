@@ -1,19 +1,44 @@
-/* src/styles/dashboard.css */
-.dashboard {
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #50e3c2;
+    --text-color: #333;
+    --background-color: #f9f9f9;
+    margin: 0 0 0 0;
+    padding: 0;
+}
+
+#root {
     font-family: Arial, sans-serif;
-    max-width: 800px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+
+    --primary-color: #4a90e2;
+    --secondary-color: #50e3c2;
+    --text-color: #333;
+    --background-color: #f9f9f9;
+    margin: 0 0 0 0;
+    padding: 0;
+}
+
+.dashboard {
+    font-family: "Calibri", sans-serif;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #f2f3f4;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard h1 {
     font-size: 2rem;
-    color: #333;
+    color: #4a90e2;
     text-align: center;
     margin-bottom: 20px;
+
+    font-family: "Roboto Light", sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .dashboard strong {
@@ -22,7 +47,7 @@
 }
 
 .dashboard h2 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: #444;
     margin-top: 20px;
     border-bottom: 2px solid #ddd;
@@ -30,7 +55,7 @@
 }
 
 .dashboard h3 {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: #444;
     margin-top: 20px;
     border-bottom: 2px solid #ddd;
@@ -38,12 +63,17 @@
 }
 
 .dashboard ul {
+
+    grid-template-rows: auto;
     list-style-type: none;
     padding: 0;
     margin: 10px 0;
+
 }
 
 .dashboard ul li {
+    /*display: inline-grid;*/
+    /*grid-template-columns: 1fr 1fr;*/
     background-color: #fff;
     margin: 5px 0;
     padding: 10px;
@@ -51,6 +81,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
     color: #242424;
+
 }
 
 .dashboard ul li:hover {
@@ -58,9 +89,113 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.registerCourseForm{
+.modules-grid {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.module-item {
+    background: #fff;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    text-align: justify;
+    color: #242424;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .modules-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .modules-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+}
+
+.courses {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.courses select {
+    padding: 8px 16px;
+    border: 1px solid #bfc9d1;
+    border-radius: 4px;
+    font-size: 1rem;
+    background: #fff;
+    color: #333;
+    transition: border-color 0.2s;
+}
+
+.courses select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.courses button {
+    padding: 8px 18px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.08);
+}
+
+.courses button:hover {
+    background: var(--secondary-color);
+    color: #222;
+}
+
+.courses button a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.semester-header {
+    background: #eaf6ff;
+    border-radius: 4px;
+    padding: 10px 16px;
+    margin: 10px 0;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.semester-header:hover {
+    background: #d0eaff;
+}
+
+.semester-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #357ab8;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.registerCourseForm {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
 }
+

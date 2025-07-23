@@ -15,6 +15,8 @@ export default function Dashboard() {
 
     const [loading, setLoading] = useState(true);
 
+    const [openSemester, setOpenSemester] = useState(null);
+
     useEffect(() => {
         getCourses().then();
     }, [setCourses]);
@@ -68,7 +70,7 @@ export default function Dashboard() {
         try {
             const response = await axiosInstance.post("/getCoursesByEmail", { email: userEmail });
             if (!response.status) {
-                throw new Error('Network response was not ok');
+                new Error('Network response was not ok');
             }
             console.log('Course modules fetched successfully:', response.data);
             setCourses(response.data.courses);
@@ -76,45 +78,67 @@ export default function Dashboard() {
             console.error('Error fetching course modules:', error);
             return [];
         }
-
     }
-
-
 
     return (
         <div className="dashboard">
-            <div className="courses" style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                {loading ? (<p>Loading...</p>) : courseList.length > 0 ? (
-                    <select onChange={(e) => updateCourse(e)}>
-                        <option>Select Course</option>
-                        {courseList.map((course, index) => (
-                            <option key={index} value={course.course_id}>
-                                {course.title}
-                            </option>
-                        ))}
-                    </select>
-                ) : (<p>No courses available.</p>)}
-                <Link to="/register">Register Course</Link>
-            </div>
-
 
             <h1>Dashboard</h1>
             <div>
                 <strong>Welcome, {user?.username}</strong>
             </div>
             <div>
-                <h2>Courses</h2>
+                <br/>
+                <div className="courses" >
+                    {loading ? (<p>Loading...</p>) : courseList.length > 0 ? (
+                        <select onChange={(e) => updateCourse(e)}>
+                            <option>Select Course</option>
+                            {courseList.map((course, index) => (
+                                <option key={index} value={course.course_id}>
+                                    {course.title}
+                                </option>
+                            ))}
+                        </select>
+                    ) : (<p>No courses available.</p>)}
+                    <button ><Link to="/register">Register Course</Link></button>
+                    <br/>
+                </div>
                 {courses.length > 0 ? (
                     <ul>
                         {courses.map((course, index) => (
                             <li key={index}>
-                                <h3>{course.title}</h3>
+                                <h2>{course.title}</h2>
                                 {course.modules?.map((moduleList, i) => (
-                                    <ul key={i}>
-                                        <h3>Module {i}</h3>
-                                        {Array.isArray(moduleList) ? (moduleList.map((mod, j) => (<li key={j}>{mod}</li>))) : (
-                                            <li>{moduleList}</li>)}
-                                    </ul>))}
+                                    <div key={i} className="semester-dropdown">
+                                        <div
+                                            className="semester-header"
+                                            onClick={() =>
+                                                setOpenSemester(
+                                                    openSemester === `${index}-${i}` ? null : `${index}-${i}`
+                                                )
+                                            }
+                                            style={{ cursor: "pointer", userSelect: "none" }}
+                                        >
+                                            <h3>
+                                                Semester {i + 1}{" "}
+                                                <span>
+                                                {/*{openSemester === `${index}-${i}` ? "▲" : "▼"}*/}
+                                            </span>
+                                            </h3>
+                                        </div>
+                                        {openSemester === `${index}-${i}` && (
+                                            <div className="modules-grid">
+                                                {Array.isArray(moduleList)
+                                                    ? moduleList.map((mod, j) => (
+                                                        <div className="module-item" key={j}>
+                                                            {mod}
+                                                        </div>
+                                                    ))
+                                                    : <div className="module-item">{moduleList}</div>}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </li>
                         ))}
                     </ul>

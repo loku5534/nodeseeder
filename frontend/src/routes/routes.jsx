@@ -14,7 +14,7 @@ export const routes = [
 
     },
     {
-        path: "/register", element: <SignUp/>
+        path: "/signup", element: <SignUp/>
 
     }
 ];
